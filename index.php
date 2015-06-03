@@ -1,6 +1,6 @@
 <html>
  <head>
-  <title>Login Pages</title>
+  <title>Login Page</title>
 
   <style type="text/css">
   

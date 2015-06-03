@@ -1,6 +1,6 @@
 <html>
  <head>
-  <title>Login Page</title>
+  <title>Login Pages</title>
 <style type="text/css">
  table {
     margin: 0 auto; /* or margin: 0 auto 0 auto */
