@@ -1,54 +1,79 @@
 <html>
- <head>
-  <title>Login Page</title>
+<head>
+  <title>Coupons</title>
+    <link rel="stylesheet" type="text/css" href="jqueryUI.css">
+    <link rel="stylesheet" type="text/css" href="DataTableUI.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
 
-  <style type="text/css">
+</head>
+<body>
+
+  <div id="MainDiv">
+    <div id="searchDiv">
+    <h1>Search Coupons</h1>
+    <br><input type="text" name="search" id="search" placeholder="Search By Coupon Code Eg: CD100" style="width:300px; height:30px;" />
+    <br><br><button  name="searchBtn" id="searchBtn">Search</button> 
+</div>
+ <div style="margin:20px;">
+      <label>Filters :</label>
+      
+     
+      <select id="stores">
+             <option value="">Stores</option>
   
-  label{
-  	
-  	text-align: right;
-  	margin: 10px;
-  	display: inline-block;
-  }
-  td{
-  	text-align: center;
+      </select>
+     
+      <select id="category">
+        <option value="">Coupon Category</option>
+      </select>
 
-  }
+      <select id="subcategory">
+        <option value="">Coupon Sub-Category</option>
+      </select>
+      <select id="couponType">
+        <option value="">Coupon Type</option>
+        <option>Normal</option>
+        <option>appExclusive</option>
+        <option>merchantApp</option>
+        <option>social</option>
+      </select>
+</div>
+<div id='filters'>
+</div>
 
-  table {
-    margin: 0 auto; /* or margin: 0 auto 0 auto */
-  }
-  label{
+    </div>
 
-  }
-  </style>
- </head>
- <body>
+<div id="tableDiv">
+    <table id='couponTable' class="display" name="couponTable"> 
+
+      <thead>
+        <tr>
+          
+          <th>Coupon Code</th>
+          <th>Description</th>
+          <th>Company</th>
+        </tr>
+      </thead>
+    
+     <tbody>	
+      <?php
+
+      require_once('coupon.php'); 
+
+      $coupon= new coupon(1,1,1,1,1);
+
+      $result=$coupon->getCouponsByCouponId("");
+      $coupon->printAllCoupons($result);
+
+      ?>
+      </tbody>
+  </table>
 
 
 
- 	<div style="text-align:center;">
-<h1>Search Coupons</h1>
-<form id="loginForm" action="search.php" method="post">
-<br><input type="text" name="search" id="search" style="width:300px; height:30px;" />
-<br><br><button type="submit" name="submit">Search</button> 
-</form>
 
-<table id='couponTable' class="cell-border" width="100%" name="couponTable"> <thead><tr><th>Coupon Id</th><th>Coupon Code</th><th>Discount</th><th>Company</th><th>Expiry</th><th>isActive</th></tr></thead>
-	<tbody>	
-<?php
 
-require_once('coupon.php'); 
-
-$coupon= new coupon(1,1,1,1,1);
-
-$result=$coupon->getCouponsByCouponId("");
-$coupon->printAllCoupons($result);
-
-?>
-<tbody>
-	</table>
-
+<!--
 <div>
 	<h1>Insert Coupons</h1>
 <form id="insertform" action="insert.php" method="post">
@@ -60,22 +85,14 @@ $coupon->printAllCoupons($result);
 <br><button type="submit" name="Insert">Insert</button> 
 </form>
 
-</div>
+</div> -->
 </div>
 
 <script type="text/javascript" src="jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="DataTableJqueryUI.js"></script>
+<script type="text/javascript" src="scripts.js"></script>
 
-<script type="text/javascript">
-$(function(){
-		$("#couponTable").DataTable();
-});
-
-</script>
-
-
-
-
- </body>
+</body>
 
 </html>

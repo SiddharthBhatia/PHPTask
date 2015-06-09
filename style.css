@@ -1,0 +1,33 @@
+
+#MainDiv{
+  text-align:center;
+
+  }
+
+  #searchDiv{
+    margin-bottom: 10px;
+  }
+  #tableDiv{
+
+    width: 70%;
+  margin: 20px auto;  
+
+  }
+
+  #filters span {
+  	background-color: #D6D6D6;
+  	 border-radius: 5px;
+   		padding: 2px;
+   		margin-left: 2px;
+
+  }
+  #filters span button{
+  	  background-color: #B0B0B0;
+  padding: 2px;
+  height: 20px;
+  width: 17;
+  border-radius: 2px;
+  margin-left: 2px;
+
+  }
+  

@@ -1,52 +1,157 @@
-<html>
- <head>
-  <title>Login Pages</title>
-<style type="text/css">
- table {
-    margin: 0 auto; /* or margin: 0 auto 0 auto */
-  }
-   td{
-  	text-align: center;
 
-  }
-</style>
-  
- </head>
- <body>
 <?php
-
 require_once('coupon.php'); 
-
-?>
-
-
- 	<div style="text-align:center;">
-<table id='couponTable' class="cell-border" width="100%" name="couponTable"> <thead><tr><th>Coupon Id</th><th>Coupon Code</th><th>Discount</th><th>Company</th><th>Expiry</th><th>isActive</th></tr></thead>
-	<tbody>	
-
-<?php
+require_once('helper.php'); 
 $coupon= new coupon(1,1,1,1,1);
 
-$result=$coupon->getCouponsByCouponId($_POST["search"]);
-$coupon->printAllCoupons($result);
+
+
+if($_GET["searchType"]=='filter')
+{
+	$result=$coupon->getCouponsBy($_GET["couponType"],$_GET["websiteTitle"], $_GET["Category"],$_GET["CouponCode"],$_GET["SubCategory"]);
+	$i=0;	
+	$a = array();
+		foreach($result as $row) {
+
+			$a[$i]['CouponCode']=$row['CouponCode'];
+
+			$a[$i]['Description']=$row['Description'];
+
+			$a[$i]['WebsiteID']=$row['websitename'];
+
+			$a[$i]['CouponType']=$row['CouponType'];
+			
+			$a[$i]['Status']=$row['Status'];
+			$i+=1;	
+			
+		}
+		$ret="{}";
+		if(!is_null($a))	
+		$ret=json_encode($a);
+		echo $ret;	
+
+}else if($_GET["searchType"]=='getAllCompany'){
+
+
+	$helper=new helper;
+
+	$result=$helper->getAllCompany();
+	
+	$i=0;	
+	$a = array();
+		foreach($result as $row) {
+
+			$a[$i]['WebsiteName']=$row['WebsiteName'];
+			$a[$i]['couponCount']=$row['couponCount'];
+			$i+=1;	
+			
+		}
+	$ret="{}";
+	//print_r($a);
+		if(!is_null($a))	
+		{
+
+			$ret=json_encode($a);
+	
+		}
+		
+		echo $ret;	
+}else if($_GET["searchType"]=='getAllCategoriesBy'){
+
+
+	$helper=new helper;
+
+	$result=$helper->getAllCategoriesBy($_GET["company"]);
+	
+	$i=0;	
+	$a = array();
+		foreach($result as $row) {
+
+			$a[$i]['Name']=$row['Name'];
+			$a[$i]['categoryId']=$row['categoryId'];
+			$a[$i]['couponCount']=$row['couponCount'];
+
+			
+			$i+=1;	
+			
+		}
+	$ret="{}";
+		if(!is_null($a))	
+		$ret=json_encode($a);
+		echo $ret;	
+}else if($_GET["searchType"]=='getAllCategories'){
+
+
+	$helper=new helper;
+
+	$result=$helper->getAllCategories();
+	
+	$i=0;	
+	$a = array();
+		foreach($result as $row) {
+
+			$a[$i]['Name']=$row['Name'];
+			$a[$i]['categoryId']=$row['categoryId'];
+			$a[$i]['couponCount']=$row['couponCount'];
+
+			
+			$i+=1;	
+			
+		}
+	$ret="{}";
+		if(!is_null($a))	
+		$ret=json_encode($a);
+		echo $ret;	
+}else if($_GET['searchType']=='getAllSubCategories') {
+
+	$helper=new helper;
+
+	$result=$helper->getAllSubCategories($_GET["categoryId"]);
+	
+	$i=0;	
+	$a = array();
+		foreach($result as $row) {
+
+			$a[$i]['SubCategory']=$row['Name'];
+			$a[$i]['SubCategoryId']=$row['SubCategoryId'];
+			
+			$i+=1;	
+			
+		}
+	$ret="{}";
+		if(!is_null($a))	
+		$ret=json_encode($a);
+		echo $ret;	
+
+}
+else{
+
+
+$result=$coupon->getCouponsByCouponId($_GET["search"]);
+	$i=0;	
+	$a = array();
+		foreach($result as $row) {
+
+			$a[$i]['CouponCode']=$row['CouponCode'];
+
+			$a[$i]['Description']=$row['Description'];
+
+			$a[$i]['WebsiteID']=$row['websitename'];
+
+			$a[$i]['CouponType']=$row['CouponType'];
+			
+			$a[$i]['Status']=$row['Status'];
+			$i+=1;	
+			
+		}
+
+		$ret="{}";
+		if(!is_null($a))	
+		$ret=json_encode($a);
+		echo $ret;	
+
+}
+
 
 ?>
-<tbody>
-	</table>
-</div>
 
-<script type="text/javascript" src="jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="jquery.dataTables.min.js"></script>
-
-<script type="text/javascript">
-$(function(){
-		$("#couponTable").DataTable();
-});
-
-</script>
-
-
-
-
- </body>
-</html>
